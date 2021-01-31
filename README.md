@@ -16,7 +16,7 @@
 "username" : "admin",
 "password" : "34bb"
 }' 'localhost:8080/login'
-  2. Take bearer from headers , for each request make sure that you have AuthorizationHeader(Authorization) and TokenPrefix (Bearer bearertoken)
+  2. Take bearer from headers , for each request make sure that you have AuthorizationHeader(Authorization) and TokenPrefix (Bearer token)
 ## To test API you can use curls:
    - To save new User: curl -XPOST -H 'Authorization: Bearer' -d '{
     "name" : "name",
