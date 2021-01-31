@@ -33,6 +33,7 @@ public class UserRepositoryTest {
     @Test
     void itShouldSelectUserByColorOfArticle() {
         // Given
+
         User user = new User("Abel", 21);
         Article article = new Article("text", ColorOfArticle.BLACK, user);
         // When
@@ -55,28 +56,27 @@ public class UserRepositoryTest {
 
         // When
         Optional<List<Object>> optionalCustomer = underTestUser.getUserByColor("ORANGE");
-        Optional<Object> objectOptional= Optional.of(optionalCustomer.get());
         // Then
-        assertThat(objectOptional).isNotPresent();
+        assertThat(optionalCustomer.get()).isEmpty();
     }
 
     @Test
     void itShouldSaveUser() {
         // Given
-
-        User customer = new User(1L, "Rick", 21);
+        underTestUser.deleteAll();
+        User customer = new User( "Rick", 22);
 
         // When
         underTestUser.save(customer);
 
         // Then
-        Optional<User> optionalCustomer = underTestUser.findById(1L);
+        Optional<User> optionalCustomer = underTestUser.findById(3L);
                     assertThat(optionalCustomer)
                             .isPresent()
                             .hasValueSatisfying(c -> {
-                                assertThat(c.getId()).isEqualTo(1L);
+                                assertThat(c.getId()).isEqualTo(3L);
                                 assertThat(c.getName()).isEqualTo("Rick");
-                                assertThat(c.getAge()).isEqualTo(21);
+                                assertThat(c.getAge()).isEqualTo(22);
                                 assertThat(c).isEqualToComparingFieldByField(customer);
                 });
     }
@@ -115,22 +115,22 @@ public class UserRepositoryTest {
     @Test
     void itShouldSelectUserByAge() {
         // Given
-        User user = new User(1L,"Abel", 21);
+        User user = new User("Abel", 100);
 
         // When
         underTestUser.save(user);
 
         // Then
         //List<User> optionalCustomer = underTestUser.getAllUsersByAge(20);
-        Optional<List<User>> optionalCustomer = underTestUser.getAllUsersByAge(20);
+        Optional<List<User>> optionalCustomer = underTestUser.getAllUsersByAge(100);
         Optional<User> user1= Optional.ofNullable(optionalCustomer.get().get(0));
         assertThat(user1)
                 .isPresent()
                 .hasValueSatisfying(c -> {
                     assertThat(c.getName()).isEqualTo("Abel");
-                    assertThat(c.getId()).isEqualTo(1L);
+                    assertThat(c.getId()).isEqualTo(7L);
                     assertThat(c.getArticle()).isEqualTo(null);
-                    assertThat(c.getAge()).isEqualTo(21);
+                    assertThat(c.getAge()).isEqualTo(100);
                     assertThat(c).isEqualToComparingFieldByField(user);
                 });
     }
@@ -166,11 +166,11 @@ public class UserRepositoryTest {
         underTestArticle.save(article);
 
         // Then
-        Optional<Article> optionalCustomer = underTestArticle.findById(1L);
+        Optional<Article> optionalCustomer = underTestArticle.findById(5L);
         assertThat(optionalCustomer)
                 .isPresent()
                 .hasValueSatisfying(c -> {
-                    assertThat(c.getArt_id()).isEqualTo(1L);
+                    assertThat(c.getArt_id()).isEqualTo(5L);
                     assertThat(c.getText()).isEqualTo("text1");
                     assertThat(c.getColorOfArticle()).isEqualTo(ColorOfArticle.BLACK);
                     assertThat(c).isEqualToComparingFieldByField(article);

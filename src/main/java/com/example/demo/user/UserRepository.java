@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Long> {
     @Query(value =
             " select s.id,s.name,s.age" +
-            " from user s where s.age> :age ",
+            " from user s where s.age>= :age ",
             nativeQuery = true)
     Optional<List<User>> getAllUsersByAge(@Param("age") Integer age);
 
